@@ -9,26 +9,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Media.Imaging;
+using System.IO;
+using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace ENCViewer
 {
 
+
     public partial class MainWindow : Window
     {
+
+        private GraphicsOverlay _sketchOverlay;
 
         public MainWindow()
         {
             InitializeComponent();
             Initialize();
-            
+
         }
 
 
         private void Initialize()
         {
             // マップ上のクリックイベントの登録
-            _mainMapView.GeoViewTapped += MyMapView_GeoViewTapped;
+            //_mainMapView.GeoViewTapped += MyMapView_GeoViewTapped;
+
+            _sketchOverlay = new GraphicsOverlay();
+            _mainMapView.GraphicsOverlays.Add(_sketchOverlay);
+
         }
 
 
@@ -249,14 +259,15 @@ namespace ENCViewer
                 MessageBox.Show("ファイルの読み込みが完了しました。");
 
             }
+
+
         }
         #endregion
 
-        
+
         #region 追加レイヤーの削除
         private void _allClearButton_Click(object sender, RoutedEventArgs e)
         {
-
             // 既存のENCレイヤーを削除
             var encLayers = _mainMapView.Map.OperationalLayers.OfType<EncLayer>().ToList();
             foreach (var l in encLayers)
@@ -268,7 +279,7 @@ namespace ENCViewer
             _legend.ItemsSource = _mainMapView.Map.OperationalLayers.Reverse();
         }
         #endregion
-        
+
 
         #region 背景地図変更
         private void _changeBaseMapRadioButton_Click(object sender, RoutedEventArgs e)
@@ -306,7 +317,74 @@ namespace ENCViewer
         #endregion
 
 
+        #region 地図の画像出力
+        private async void _printButton_Click(object sender, RoutedEventArgs e)
+        {
+            // ダイアログのインスタンスを生成
+            var dialog = new SaveFileDialog();
+            dialog.Title = "JPEGファイルの保存";
+            dialog.AddExtension = true;
+            dialog.Filter = "jpg画像|*.jpg;*.jpeg";
 
-    
+            // ダイアログを表示する
+            if (dialog.ShowDialog() == true)
+            {
+                try
+                {
+                    // マップの現在の状態をJPEG画像として出力して、指定のパスに保存する
+                    ImageSource image = await RuntimeImageExtensions.ToImageSourceAsync(await _mainMapView.ExportImageAsync());
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)image));
+                    FileStream stream = new FileStream(dialog.FileName, FileMode.Create);
+                    encoder.Save(stream);
+                    stream.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                    return;
+                }
+            }
+        }
+        #endregion
+
+        #region 作図の開始・停止
+        private async void _startSketchButton_Click(object sender, RoutedEventArgs e)
+        {
+
+            // フリーハンドでの作図（スケッチ モード）を開始する
+            if (_startSketchButton.Content.ToString() == "作図開始") {
+                _startSketchButton.Content = "作図停止";
+
+                SketchCreationMode creationMode = SketchCreationMode.FreehandLine;
+                try
+                {
+                    await _mainMapView.SketchEditor.StartAsync(creationMode, true);
+                }
+                catch (TaskCanceledException)
+                {
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+
+                }
+
+            } else
+            {
+                // スケッチ モードを停止する
+                _startSketchButton.Content = "作図開始";
+                if (_mainMapView.SketchEditor.CancelCommand.CanExecute(null))
+                {
+                    _mainMapView.SketchEditor.CancelCommand.Execute(null);   
+                }
+            }
+
+        }
+        #endregion
     }
 }

@@ -118,6 +118,9 @@
     <Resource Include="Assets\terrain_labels.jpg" />
     <Resource Include="Assets\topo_jp.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="System\Drawing\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Esri.ArcGISRuntime.WPF.100.2.0\build\net452\Esri.ArcGISRuntime.WPF.targets" Condition="Exists('..\packages\Esri.ArcGISRuntime.WPF.100.2.0\build\net452\Esri.ArcGISRuntime.WPF.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

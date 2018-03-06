@@ -25,6 +25,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -45,6 +46,11 @@
                         Click="_showRotateButton_Click" Margin="6,6,0,0" />
                 <Button Grid.Row="1" Grid.Column="3" x:Name="_showSettingDisplayButton" Content="ENC 表示設定" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
                         Click="_showSettingDisplayButton_Click" Margin="6,6,0,0" />
+                <Button Grid.Row="3" Grid.Column="1" x:Name="_startSketchButton" Content="作図開始" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Click="_startSketchButton_Click" Margin="6,6,0,0" />
+                <Button Grid.Row="3" Grid.Column="2" x:Name="_printButton" Content="プリント" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        Click="_printButton_Click" Margin="6,6,0,0" />
+
             </Grid>
         </Border>
         
