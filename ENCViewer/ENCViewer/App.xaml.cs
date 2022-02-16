@@ -1,17 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ENCViewer.ViewModels;
+using ENCViewer.Views;
+using Prism.Ioc;
+using Prism.Modularity;
 using System.Windows;
 
 namespace ENCViewer
 {
     /// <summary>
-    /// App.xaml の相互作用ロジック
+    /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
+        protected override Window CreateShell()
+        {
+            return Container.Resolve<MainWindow>();
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+            containerRegistry.RegisterDialog<ChangeBasemap, ChangeBasemapViewModel>();
+            containerRegistry.RegisterDialog<LayerList, LayerListViewModel>();
+            containerRegistry.RegisterDialog<EncSetting, EncSettingViewModel>();
+            containerRegistry.RegisterDialog<Rotate, RotateViewModel>();
+            containerRegistry.RegisterSingleton<MainWindowViewModel>();
+        }
+
     }
 }

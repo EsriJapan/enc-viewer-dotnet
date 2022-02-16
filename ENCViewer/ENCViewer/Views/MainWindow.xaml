@@ -1,0 +1,62 @@
+﻿<Window x:Class="ENCViewer.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
+        xmlns:prism="http://prismlibrary.com/" 
+        xmlns:ei="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:bh="clr-namespace:ENCViewer.Behaviors" 
+        prism:ViewModelLocator.AutoWireViewModel="True"
+        Title="{Binding Title}" Height="500" Width="800">
+
+    <Window.Resources>
+    </Window.Resources>
+
+    <Grid>
+        <Grid x:Name="_mapGrid">
+            <esri:MapView x:Name="MainMapView" Map="{Binding Map}" SketchEditor="{Binding SketchEditor}"  GeoViewTapped="MainMapView_GeoViewTapped" >
+                <ei:Interaction.Behaviors>
+                    <bh:SetMapViewViewportBehavior Viewpoint="{Binding Viewpoint}" />
+                    <bh:SetMapViewRotateBehavior Rotate="{Binding Rotate}" />
+                    <bh:MapViewViewpointChangedBehavior Command="{Binding UpdateViewpointCommand}" />
+                </ei:Interaction.Behaviors>
+            </esri:MapView>
+            <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        </Grid>
+
+        <!--メイン操作パネル-->
+        <Border Background="#77333333" CornerRadius="12" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18" Padding="18" Visibility="Visible">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Row="0" Grid.Column="1" Content="背景地図変更" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              Margin="6,6,0,0" Command="{Binding ShowViewChangeBasemapButton}" />
+                <Button Grid.Row="0" Grid.Column="2" Content="ENC 追加" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Margin="6,6,0,0" Command="{Binding AddEncFileButton}"/>
+                <Button Grid.Row="0" Grid.Column="3" Content="追加データ削除" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Margin="6,6,0,0" Command="{Binding DeleteEncFileButton}"/>
+                <Button Grid.Row="1" Grid.Column="1" Content="レイヤー一覧" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              Margin="6,6,0,0"  Command="{Binding ShowViewLayerListButton}"/>
+                <Button Grid.Row="1" Grid.Column="2" Content="回転/透過" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Margin="6,6,0,0" Command="{Binding ShowViewRotateButton}"/>
+                <Button Grid.Row="1" Grid.Column="3" Content="ENC 表示設定" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Margin="6,6,0,0" Command="{Binding ShowViewEncSettingButton}"/>
+                <Button Grid.Row="3" Grid.Column="1" Content="{Binding SketchButtonText}" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             Margin="6,6,0,0" Command="{Binding StartSketchButton}"/>
+                <Button Grid.Row="3" Grid.Column="2" Content="プリント" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Margin="6,6,0,0" Click="_printButton_Click"/>
+            </Grid>
+        </Border>
+        
+    </Grid>
+
+</Window>
