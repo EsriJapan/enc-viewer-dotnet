@@ -33,8 +33,13 @@ namespace ENCViewer
 
         private void Initialize()
         {
+
+            ArcGISRuntimeEnvironment.ApiKey = "APIキーを入力";
+            
+            _mainMapView.Map = new Map(BasemapStyle.ArcGISStreets);
+
             // マップ上のクリックイベントの登録
-            //_mainMapView.GeoViewTapped += MyMapView_GeoViewTapped;
+            _mainMapView.GeoViewTapped += MyMapView_GeoViewTapped;
 
             _sketchOverlay = new GraphicsOverlay();
             _mainMapView.GraphicsOverlays.Add(_sketchOverlay);
@@ -289,25 +294,39 @@ namespace ENCViewer
                 // 現在の背景地図を削除
                 _mainMapView.Map.Basemap.BaseLayers.RemoveAt(0);
 
-                // 選択された背景ボタンに応じて背景地図を変更
+
                 var radioButton = sender as RadioButton;
-                if (radioButton.Tag.ToString() == "osm")
+                if (radioButton.Tag.ToString() == "imagery")
                 {
-                    _mainMapView.Map.Basemap.BaseLayers.Insert(0, new OpenStreetMapLayer() { Name = "背景地図" });
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISImagery);
+
+                }
+                else if (radioButton.Tag.ToString() == "streets")
+                {
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISStreets);
+
+                }
+                else if (radioButton.Tag.ToString() == "topographic")
+                {
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISTopographic);
+
+                }
+                else if (radioButton.Tag.ToString() == "oceans")
+                {
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISOceans);
+
+                }
+                else if (radioButton.Tag.ToString() == "osm")
+                {
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.OSMStandard);
+
                 }
                 else if (radioButton.Tag.ToString() == "gsi")
                 {
-                    var webTiledLayer = new WebTiledLayer() { TemplateUri = "http://cyberjapandata.gsi.go.jp/xyz/std/{level}/{col}/{row}.png" };
-                    webTiledLayer.Name = "背景地図";
+                    var webTiledLayer = new WebTiledLayer() { TemplateUri = "https://cyberjapandata.gsi.go.jp/xyz/std/{level}/{col}/{row}.png" };
                     _mainMapView.Map.Basemap.BaseLayers.Insert(0, webTiledLayer);
                 }
-                else
-                {
-                    _mainMapView.Map.Basemap.BaseLayers.Insert(0, new ArcGISTiledLayer(new Uri(radioButton.Tag.ToString())) { Name = "背景地図" });
-                }
 
-                // レイヤーリストを更新
-                _legend.ItemsSource = _mainMapView.Map.Basemap.BaseLayers.Reverse();
             }
             catch (Exception ex)
             {

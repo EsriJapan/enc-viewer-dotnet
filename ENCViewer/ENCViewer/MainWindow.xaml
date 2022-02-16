@@ -9,15 +9,7 @@
         Title="ENC Viewer" Height="800" Width="1200">
     <Grid>
         <Grid x:Name="_sceneGrid">
-            <esri:MapView x:Name="_mainMapView">
-                <esri:Map>
-                    <esri:Map.Basemap>
-                        <esri:Basemap Name="Basemap">
-                            <esri:ArcGISTiledLayer Name="World Topographic" Source="http://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer"/>
-                        </esri:Basemap>
-                    </esri:Map.Basemap>
-                </esri:Map>
-            </esri:MapView>
+            <esri:MapView x:Name="_mainMapView" />
         </Grid>
         <!--メイン操作パネル-->
         <Border x:Name="_mainOperationPanel" Background="#77333333" CornerRadius="12" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="18" Padding="18" Visibility="Visible">
@@ -116,25 +108,25 @@
                     <ColumnDefinition Width="18" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <RadioButton Grid.Row="0" Grid.Column="0" Tag="http://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="0" Grid.Column="0" Tag="imagery" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="衛星画像" Foreground="White" FontSize="14" />
                         <Image  Width="100" Height="67" Stretch="Fill" Source="Assets/imagery_jp.jpg" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="2" Grid.Column="0" Tag="http://services.arcgisonline.com/arcgis/rest/services/World_Street_Map/MapServer" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="2" Grid.Column="0" Tag="streets" GroupName="background" IsChecked="True" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="道路地図" Foreground="White" FontSize="14" />
                         <Image Width="100" Height="67" Stretch="Fill" Source="Assets/streets_jp.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="4" Grid.Column="0" Tag="http://services.arcgisonline.com/arcgis/rest/services/World_Topo_Map/MapServer" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="4" Grid.Column="0" Tag="topographic" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="地形図" Foreground="White" FontSize="14" />
                         <Image Width="100" Height="67" Stretch="Fill" Source="Assets/topo_jp.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="0" Grid.Column="2" Tag="http://services.arcgisonline.com/arcgis/rest/services/Ocean_Basemap/MapServer" GroupName="background" IsChecked="True" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="0" Grid.Column="2" Tag="oceans" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="海洋図" Foreground="White" FontSize="14" />
                         <Image Width="100" Height="67" Stretch="Fill" Source="Assets/tempoceans.jpg" VerticalAlignment="Center" />
