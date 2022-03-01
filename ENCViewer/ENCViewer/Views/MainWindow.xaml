@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:esri="http://schemas.esri.com/arcgis/runtime/2013"
         xmlns:prism="http://prismlibrary.com/" 
-        xmlns:ei="http://schemas.microsoft.com/xaml/behaviors" 
-        xmlns:bh="clr-namespace:ENCViewer.Behaviors" 
+        xmlns:bh="http://schemas.microsoft.com/xaml/behaviors" 
+        xmlns:behaviors="clr-namespace:ENCViewer.Behaviors" 
+        xmlns:triggers="clr-namespace:ENCViewer.Triggers" 
         prism:ViewModelLocator.AutoWireViewModel="True"
         Title="{Binding Title}" Height="500" Width="800">
 
@@ -13,12 +14,16 @@
 
     <Grid>
         <Grid x:Name="_mapGrid">
-            <esri:MapView x:Name="MainMapView" Map="{Binding Map}" SketchEditor="{Binding SketchEditor}"  GeoViewTapped="MainMapView_GeoViewTapped" >
-                <ei:Interaction.Behaviors>
-                    <bh:SetMapViewViewportBehavior Viewpoint="{Binding Viewpoint}" />
-                    <bh:SetMapViewRotateBehavior Rotate="{Binding Rotate}" />
-                    <bh:MapViewViewpointChangedBehavior Command="{Binding UpdateViewpointCommand}" />
-                </ei:Interaction.Behaviors>
+            <esri:MapView x:Name="MainMapView" Map="{Binding Map}" SketchEditor="{Binding SketchEditor}" >
+                <bh:Interaction.Behaviors>
+                    <behaviors:SetMapViewViewportBehavior Viewpoint="{Binding Viewpoint}" />
+                    <behaviors:MapViewViewpointChangedBehavior Command="{Binding UpdateViewpointCommand}" />
+                </bh:Interaction.Behaviors>
+                <bh:Interaction.Triggers>
+                    <bh:EventTrigger EventName="GeoViewTapped">
+                        <triggers:IndentifyAction Map="{Binding Map}"/>
+                    </bh:EventTrigger>
+                </bh:Interaction.Triggers>
             </esri:MapView>
             <ContentControl prism:RegionManager.RegionName="ContentRegion" />
         </Grid>
@@ -53,10 +58,9 @@
                 <Button Grid.Row="3" Grid.Column="1" Content="{Binding SketchButtonText}" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
                              Margin="6,6,0,0" Command="{Binding StartSketchButton}"/>
                 <Button Grid.Row="3" Grid.Column="2" Content="プリント" Width="100" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Margin="6,6,0,0" Click="_printButton_Click"/>
+                            Margin="6,6,0,0" Command="{Binding PrintMapViewButton}" >
+                </Button>
             </Grid>
         </Border>
-        
     </Grid>
-
 </Window>

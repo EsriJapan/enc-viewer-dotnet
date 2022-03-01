@@ -1,7 +1,7 @@
-﻿using ENCViewer.ViewModels;
+﻿using ENCViewer.Services;
+using ENCViewer.ViewModels;
 using ENCViewer.Views;
 using Prism.Ioc;
-using Prism.Modularity;
 using System.Windows;
 
 namespace ENCViewer
@@ -18,12 +18,15 @@ namespace ENCViewer
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<MainWindowViewModel>();
             containerRegistry.RegisterDialog<ChangeBasemap, ChangeBasemapViewModel>();
             containerRegistry.RegisterDialog<LayerList, LayerListViewModel>();
             containerRegistry.RegisterDialog<EncSetting, EncSettingViewModel>();
             containerRegistry.RegisterDialog<Rotate, RotateViewModel>();
-            containerRegistry.RegisterSingleton<MainWindowViewModel>();
+            containerRegistry.RegisterDialog<Message, MessageViewModel>();
+            containerRegistry.RegisterSingleton<ICommonDialogService, CommonDialogService>();
         }
+
 
     }
 }

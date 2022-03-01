@@ -10,7 +10,8 @@ using System.Windows.Input;
 
 namespace ENCViewer.Behaviors
 {
-    public class MapViewViewpointChangedBehavior : Behavior<MapView>
+    public class MapViewViewpointChangedBehavior
+        : Behavior<MapView>
     {
         /// <summary>
         /// 
@@ -41,7 +42,7 @@ namespace ENCViewer.Behaviors
         /// </summary>
         protected override void OnDetaching()
         {
-            this.AssociatedObject.ViewpointChanged += AssociatedObject_ViewpointChanged;
+            this.AssociatedObject.ViewpointChanged -= AssociatedObject_ViewpointChanged;
         }
 
         /// <summary>

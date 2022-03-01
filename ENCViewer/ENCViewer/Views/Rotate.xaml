@@ -2,32 +2,31 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:prism="http://prismlibrary.com/"
-             xmlns:i1="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:bh="http://schemas.microsoft.com/xaml/behaviors"
              prism:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
         <StackPanel Margin="10" VerticalAlignment="Center">
             <DockPanel VerticalAlignment="Center" Margin="10">
                 <Label DockPanel.Dock="Left" FontWeight="Bold">回転:</Label>
                 <Slider Minimum="0" Maximum="360" Name="slColorR" Value="{Binding RotateValue}" >
-                    <i1:Interaction.Triggers>
-                        <i1:EventTrigger EventName="ValueChanged">
-                            <i1:InvokeCommandAction Command="{Binding ChangeRotate}"/>
+                    <bh:Interaction.Triggers>
+                        <bh:EventTrigger EventName="ValueChanged">
+                            <bh:InvokeCommandAction Command="{Binding ChangeRotate}"/>
                             <!--<prism:InvokeCommandAction Command="{Binding ValueChanged}"/>-->
-                        </i1:EventTrigger>
-                    </i1:Interaction.Triggers>
+                        </bh:EventTrigger>
+                    </bh:Interaction.Triggers>
                 </Slider>
             </DockPanel>
             <DockPanel VerticalAlignment="Center" Margin="10">
                 <Label DockPanel.Dock="Left" FontWeight="Bold">透過:</Label>
                 <Slider Minimum="0" Maximum="1.0" Name="slColorG" Value="{Binding OpacityValue}"  >
-                    <i1:Interaction.Triggers>
-                        <i1:EventTrigger EventName="ValueChanged">
-                            <i1:InvokeCommandAction Command="{Binding ChangeOpacity}"/>
-                        </i1:EventTrigger>
-                    </i1:Interaction.Triggers>
+                    <bh:Interaction.Triggers>
+                        <bh:EventTrigger EventName="ValueChanged">
+                            <bh:InvokeCommandAction Command="{Binding ChangeOpacity}"/>
+                        </bh:EventTrigger>
+                    </bh:Interaction.Triggers>
                 </Slider>
             </DockPanel>
-            
             <Label></Label>
         </StackPanel>
     </Grid>

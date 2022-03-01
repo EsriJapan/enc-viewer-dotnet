@@ -1,12 +1,14 @@
 ﻿using ENCViewer.ViewModels;
-using Esri.ArcGISRuntime.Data;
-using Esri.ArcGISRuntime.Mapping;
+using ENCViewer.Services;
+using ENCViewer.Triggers;
 using Esri.ArcGISRuntime.UI;
-using Esri.ArcGISRuntime.UI.Controls;
 using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.IO;
+using Prism.Events;
+using Prism.Services.Dialogs;
 
 namespace ENCViewer.Views
 {
@@ -15,44 +17,77 @@ namespace ENCViewer.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        private MainWindowViewModel _mainWindowViewModel;
 
-        public MainWindow(MainWindowViewModel mainWindowViewModel)
+        private MainWindowViewModel _mainWindowViewModel;
+        private IDialogService _dialogService;
+        private ICommonDialogService _commonDialogService;
+
+        private DialogParameters _dialogParameters;
+
+
+        public MainWindow(MainWindowViewModel mainWindowViewModel, IDialogService dialogService, ICommonDialogService commonDialogService)
         {
             InitializeComponent();
+
             _mainWindowViewModel = mainWindowViewModel;
+            _dialogService = dialogService;
+            _commonDialogService = commonDialogService;
+
+            Messenger.Instance.GetEvent<PubSubEvent<IdentifyEventArgs>>().Subscribe(ShowCallout);
+            Messenger.Instance.GetEvent<PubSubEvent<string>>().Subscribe(message => {
+                if (message == "HideCallout") HideCallout();
+            });
+
+            Messenger.Instance.GetEvent<PubSubEvent<string>>().Subscribe(message => {
+                if (message == "DoPrint") PrintMapView();
+            });
 
         }
 
-        public async void MainMapView_GeoViewTapped(object sender, GeoViewInputEventArgs e)
+        private void ShowCallout(IdentifyEventArgs args)
         {
-            try
-            {
-                MainMapView.DismissCallout();
-                IReadOnlyList<IdentifyLayerResult> results = await MainMapView.IdentifyLayersAsync(e.Position, 10, false);
-                MainWindowViewModel viewmodel = this.Resources["MainWindowViewModel"] as MainWindowViewModel;
-                CalloutDefinition definition = _mainWindowViewModel.HandleTap(results);
-                MainMapView.ShowCalloutAt(e.Location, definition);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error", ex.Message);
-            }
+            MainMapView.ShowCalloutAt(args.MapPoint, args.CalloutDefinition);
         }
 
-        private async void _printButton_Click(object sender, RoutedEventArgs e)
+        private void HideCallout()
         {
-            try
-            {
-                // マップの現在の状態をJPEG画像として出力して、指定のパスに保存する
-                ImageSource image = await RuntimeImageExtensions.ToImageSourceAsync(await MainMapView.ExportImageAsync());
-                MainWindowViewModel viewmodel = this.Resources["MainWindowViewModel"] as MainWindowViewModel;
-                _mainWindowViewModel.PrintImage(image);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error", ex.Message);
-            }
+            MainMapView.DismissCallout();
         }
+
+        private async void PrintMapView()
+        {
+            _mainWindowViewModel.HandlePrint();
+
+            // ダイアログのインスタンスを生成
+            var dialogSettings = new SaveFileDialogSettings();
+            dialogSettings.Title = "JPEGファイルの保存";
+            dialogSettings.Filter = "jpg画像|*.jpg;*.jpeg";
+            dialogSettings.AddExtension = true;
+
+            // ダイアログを表示する
+            if (_commonDialogService.ShowDialog(dialogSettings) == true)
+            {
+                try
+                {
+                    // マップの現在の状態をJPEG画像として出力して、指定のパスに保存する
+                    ImageSource image = await RuntimeImageExtensions.ToImageSourceAsync(await MainMapView.ExportImageAsync());
+                    JpegBitmapEncoder encoder = new JpegBitmapEncoder();
+                    encoder.Frames.Add(BitmapFrame.Create((BitmapSource)image));
+                    FileStream stream = new FileStream(dialogSettings.FileName, FileMode.Create);
+                    encoder.Save(stream);
+                    stream.Close();
+                }
+                catch (Exception ex)
+                {
+                    _dialogParameters = new DialogParameters();
+                    _dialogParameters.Add(nameof(MessageViewModel.MessageLabel), ex.Message);
+                    _dialogService.ShowDialog(nameof(Message), _dialogParameters, null);
+
+                    return;
+                }
+            }
+
+        }
+
     }
 }

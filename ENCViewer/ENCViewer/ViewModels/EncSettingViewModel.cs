@@ -3,8 +3,7 @@ using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Linq;
+
 
 namespace ENCViewer.ViewModels
 {
@@ -15,31 +14,21 @@ namespace ENCViewer.ViewModels
         public Converter.item EncColorSchemeValue
         {
             get { return _encColorSchemeValue; }
-            set
-            {
-                _encColorSchemeValue = value;
-                //OnPropertyChanged("EncColorSchemeValue");
-            }
+            set { _encColorSchemeValue = value; }
         }
 
         private Converter.item _encAreaValue;
         public Converter.item EncAreaValue
         {
             get { return _encAreaValue; }
-            set
-            {
-                _encAreaValue = value;
-            }
+            set { _encAreaValue = value; }
         }
 
         private Converter.item _encPointValue;
         public Converter.item EncPointValue
         {
             get { return _encPointValue; }
-            set
-            {
-                _encPointValue = value;
-            }
+            set { _encPointValue = value; }
         }
 
 
@@ -49,6 +38,21 @@ namespace ENCViewer.ViewModels
         public EncSettingViewModel()
         {
             SetDisplaySettingButton = new DelegateCommand(SetDisplaySettingButtonExecute);
+
+            // 現在のENCの表示設定を取得
+            EncDisplaySettings globalDisplaySettings = EncEnvironmentSettings.Default.DisplaySettings;
+            EncMarinerSettings globalMarinerSettings = globalDisplaySettings.MarinerSettings;
+
+            if (globalMarinerSettings.ColorScheme == EncColorScheme.Day) { EncColorSchemeValue = Converter.item.EncColorDay; }
+            else if (globalMarinerSettings.ColorScheme == EncColorScheme.Dusk) { EncColorSchemeValue = Converter.item.EncColorDusk; }
+            else if (globalMarinerSettings.ColorScheme == EncColorScheme.Night) { EncColorSchemeValue = Converter.item.EncColorNight; }
+
+            if (globalMarinerSettings.AreaSymbolizationType == EncAreaSymbolizationType.Plain) { EncAreaValue = Converter.item.EncAreaPlain; }
+            else if (globalMarinerSettings.AreaSymbolizationType == EncAreaSymbolizationType.Symbolized) { EncAreaValue = Converter.item.EncAreaSymbol; }
+
+            if (globalMarinerSettings.PointSymbolizationType == EncPointSymbolizationType.PaperChart) { EncPointValue = Converter.item.EncPointPaper; }
+            else if (globalMarinerSettings.PointSymbolizationType == EncPointSymbolizationType.Simplified) { EncPointValue = Converter.item.EncPointSimple; }
+
 
         }
 
@@ -67,6 +71,7 @@ namespace ENCViewer.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+
         }
 
         private void SetDisplaySettingButtonExecute()
@@ -91,10 +96,5 @@ namespace ENCViewer.ViewModels
             
         }
     }
-
-
-
-
-
 
 }

@@ -1,12 +1,9 @@
-﻿using Prism.Commands;
+﻿using Esri.ArcGISRuntime.Mapping;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Timers;
-using System.Windows;
 using System.Windows.Input;
 
 namespace ENCViewer.ViewModels
@@ -16,14 +13,14 @@ namespace ENCViewer.ViewModels
         private MainWindowViewModel _mainWindowViewModel;
 
         
-        private double _opacityValue = 0;
+        private double _opacityValue;
         public double OpacityValue
         {
             get { return _opacityValue; }
             set { SetProperty(ref _opacityValue, value); }
         }
 
-        private double _rotateValue = 0;
+        private double _rotateValue;
         public double RotateValue
         {
             get { return _rotateValue; }
@@ -31,12 +28,10 @@ namespace ENCViewer.ViewModels
         }
 
 
-
         public ICommand ChangeOpacity { get; set; }
         public ICommand ChangeRotate { get; set; }
 
         //public DelegateCommand<object[]> ValueChanged { get; }
-        public DelegateCommand<object[]> AreaSelectionChanged { get; }
 
 
         public RotateViewModel(MainWindowViewModel mainWindowViewModel)
@@ -44,11 +39,20 @@ namespace ENCViewer.ViewModels
 
             _mainWindowViewModel = mainWindowViewModel;
 
-
-            //ValueChanged = new DelegateCommand<object[]>(ValueChangedExecute);
-
             ChangeOpacity = new DelegateCommand<object[]>(ChangeOpacityExecute);
             ChangeRotate = new DelegateCommand<object[]>(ChangeRotateExecute);
+            //ValueChanged = new DelegateCommand<object[]>(ValueChangedExecute);
+
+
+            RotateValue = _mainWindowViewModel.Viewpoint.Rotation;
+
+            if (_mainWindowViewModel.Map.OperationalLayers.Count > 0)
+            {
+                OpacityValue = _mainWindowViewModel.Map.OperationalLayers.First().Opacity;
+            } else
+            {
+                OpacityValue = 1;
+            }
 
         }
 
@@ -71,13 +75,12 @@ namespace ENCViewer.ViewModels
         {
         }
 
+        /*
         private void ValueChangedExecute(object[] items)
         {
             Console.WriteLine("Value Changed");
-            //_mainWindowViewModel.Title = OpacityValue.ToString();
         }
-
-
+        */
 
         private void ChangeOpacityExecute(object[] items)
         {
@@ -85,16 +88,14 @@ namespace ENCViewer.ViewModels
             {
                 for (int i = 0; i < _mainWindowViewModel.Map.OperationalLayers.Count; i++)
                 {
-                    _mainWindowViewModel.Map.OperationalLayers[i].Opacity = 1 - OpacityValue;
+                    _mainWindowViewModel.Map.OperationalLayers[i].Opacity = OpacityValue;
                 }
             }
         }
 
-
         private void ChangeRotateExecute(object[] items)
         {
-            _mainWindowViewModel.Rotate = RotateValue;
-
+            _mainWindowViewModel.Viewpoint = new Viewpoint(_mainWindowViewModel.Viewpoint.TargetGeometry, RotateValue);
         }
 
     }

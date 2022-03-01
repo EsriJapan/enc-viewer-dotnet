@@ -1,9 +1,7 @@
 ﻿using Esri.ArcGISRuntime.Mapping;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Services.Dialogs;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -12,7 +10,6 @@ namespace ENCViewer.ViewModels
     public class LayerListViewModel : BindableBase, IDialogAware
     {
         private MainWindowViewModel _mainWindowViewModel;
-
 
         private ObservableCollection<Layer> _layerListBox = new ObservableCollection<Layer>();
         public ObservableCollection<Layer> LayerListBox
