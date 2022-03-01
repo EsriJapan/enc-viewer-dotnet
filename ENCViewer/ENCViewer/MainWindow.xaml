@@ -108,40 +108,40 @@
                     <ColumnDefinition Width="18" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
-                <RadioButton Grid.Row="0" Grid.Column="0" Tag="imagery" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="0" Grid.Column="0" Tag="ArcGISImagery" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="衛星画像" Foreground="White" FontSize="14" />
-                        <Image  Width="100" Height="67" Stretch="Fill" Source="Assets/imagery_jp.jpg" VerticalAlignment="Center" />
+                        <Image  Width="100" Height="67" Stretch="Fill" Source="Assets/ArcGISImagery.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="2" Grid.Column="0" Tag="streets" GroupName="background" IsChecked="True" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="2" Grid.Column="0" Tag="ArcGISStreets" GroupName="background" IsChecked="True" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="道路地図" Foreground="White" FontSize="14" />
-                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/streets_jp.png" VerticalAlignment="Center" />
+                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/ArcGISStreets.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="4" Grid.Column="0" Tag="topographic" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="4" Grid.Column="0" Tag="ArcGISTopographic" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="地形図" Foreground="White" FontSize="14" />
-                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/topo_jp.png" VerticalAlignment="Center" />
+                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/ArcGISTopographic.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="0" Grid.Column="2" Tag="oceans" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="0" Grid.Column="2" Tag="ArcGISOceans" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="海洋図" Foreground="White" FontSize="14" />
-                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/tempoceans.jpg" VerticalAlignment="Center" />
+                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/ArcGISOceans.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="2" Grid.Column="2" Tag="gsi" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="2" Grid.Column="2" Tag="GSI" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
                         <TextBlock Text="地理院地図" Foreground="White" FontSize="14" />
-                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/gsi.png" VerticalAlignment="Center" />
+                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/GSI.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
-                <RadioButton Grid.Row="4" Grid.Column="2" Tag="osm" GroupName="background" Click="_changeBaseMapRadioButton_Click">
+                <RadioButton Grid.Row="4" Grid.Column="2" Tag="OSMStandard" GroupName="background" Click="_changeBaseMapRadioButton_Click">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="OSM" Foreground="White" FontSize="14" />
-                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/temposm.jpg" VerticalAlignment="Center" />
+                        <TextBlock Text="OpenStreetMap" Foreground="White" FontSize="14" />
+                        <Image Width="100" Height="67" Stretch="Fill" Source="Assets/OSMStandard.png" VerticalAlignment="Center" />
                     </StackPanel>
                 </RadioButton>
                 <Button x:Name="_closeBaseMapPanelButton" Grid.Row="6" Grid.Column="2" Content="閉じる" Height="25" Click="_closeBaseMapPanelButton_Click" />

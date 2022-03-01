@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.IO;
 using System.Windows.Media;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace ENCViewer
 {
@@ -34,8 +35,8 @@ namespace ENCViewer
         private void Initialize()
         {
 
-            ArcGISRuntimeEnvironment.ApiKey = "APIキーを入力";
-            
+            ArcGISRuntimeEnvironment.ApiKey = ConfigurationManager.AppSettings["APIKey"];
+
             _mainMapView.Map = new Map(BasemapStyle.ArcGISStreets);
 
             // マップ上のクリックイベントの登録
@@ -296,32 +297,32 @@ namespace ENCViewer
 
 
                 var radioButton = sender as RadioButton;
-                if (radioButton.Tag.ToString() == "imagery")
+                if (radioButton.Tag.ToString() == "ArcGISImagery")
                 {
                     _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISImagery);
 
                 }
-                else if (radioButton.Tag.ToString() == "streets")
+                else if (radioButton.Tag.ToString() == "ArcGISStreets")
                 {
                     _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISStreets);
 
                 }
-                else if (radioButton.Tag.ToString() == "topographic")
+                else if (radioButton.Tag.ToString() == "ArcGISTopographic")
                 {
                     _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISTopographic);
 
                 }
-                else if (radioButton.Tag.ToString() == "oceans")
+                else if (radioButton.Tag.ToString() == "ArcGISOceans")
                 {
                     _mainMapView.Map.Basemap = new Basemap(BasemapStyle.ArcGISOceans);
 
                 }
-                else if (radioButton.Tag.ToString() == "osm")
+                else if (radioButton.Tag.ToString() == "OSMStandard")
                 {
                     _mainMapView.Map.Basemap = new Basemap(BasemapStyle.OSMStandard);
 
                 }
-                else if (radioButton.Tag.ToString() == "gsi")
+                else if (radioButton.Tag.ToString() == "GSI")
                 {
                     var webTiledLayer = new WebTiledLayer() { TemplateUri = "https://cyberjapandata.gsi.go.jp/xyz/std/{level}/{col}/{row}.png" };
                     _mainMapView.Map.Basemap.BaseLayers.Insert(0, webTiledLayer);

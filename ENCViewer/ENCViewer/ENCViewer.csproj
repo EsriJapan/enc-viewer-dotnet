@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Device" />
     <Reference Include="System.Drawing" />
@@ -102,16 +103,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\DGCanvasBase.png" />
     <Resource Include="Assets\gsi.png" />
-    <Resource Include="Assets\imagery_jp.jpg" />
-    <Resource Include="Assets\light_gray_canvas.jpg" />
-    <Resource Include="Assets\streets_jp.png" />
-    <Resource Include="Assets\tempimagery.jpg" />
-    <Resource Include="Assets\tempoceans.jpg" />
-    <Resource Include="Assets\temposm.jpg" />
-    <Resource Include="Assets\terrain_labels.jpg" />
-    <Resource Include="Assets\topo_jp.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="System\Drawing\" />
@@ -129,6 +121,13 @@
     <PackageReference Include="Esri.ArcGISRuntime.WPF">
       <Version>100.13.0</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ArcGISImagery.png" />
+    <Resource Include="Assets\ArcGISOceans.png" />
+    <Resource Include="Assets\ArcGISStreets.png" />
+    <Resource Include="Assets\ArcGISTopographic.png" />
+    <Resource Include="Assets\OSMStandard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
