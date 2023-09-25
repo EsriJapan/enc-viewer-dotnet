@@ -18,14 +18,14 @@ S-57 形式の ENC のセルをサポートしています。
 
 ## 使用している製品
 
-* [ArcGIS Runtime SDK for .NET (WPF API)](https://developers.arcgis.com/net/)
+* [ArcGIS Maps SDK for .NET (WPF API)](https://developers.arcgis.com/net/)
 
 ArcGIS の開発キットを使用して開発を行う場合は ArcGIS 開発者アカウントが必要です。開発者アカウントは無償で作成することができます。作成方法は[こちら](https://esrijapan.github.io/arcgis-dev-resources/guide/get-dev-account/)を参照してください。
 アプリを実行するには [API キーを取得](https://esrijapan.github.io/arcgis-dev-resources/guide/get-api-key/)し、App.config の APIKey に設定します。
 
 
 ## 動作環境
-* Windows 11 / 10 / 8.1
+ArcGIS Maps SDK for .NET の [System requirements](https://developers.arcgis.com/net/reference/system-requirements/) をご確認ください。
 
 ## ライセンス
 Copyright 2018 Esri Japan Corporation.

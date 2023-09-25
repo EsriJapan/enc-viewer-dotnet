@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ENCViewer</RootNamespace>
     <AssemblyName>ENCViewer</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -110,16 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Esri.ArcGISRuntime">
-      <Version>100.13.0</Version>
+      <Version>200.2.0</Version>
     </PackageReference>
     <PackageReference Include="Esri.ArcGISRuntime.Hydrography">
-      <Version>100.13.0</Version>
-    </PackageReference>
-    <PackageReference Include="Esri.ArcGISRuntime.runtimes.win">
-      <Version>100.13.0</Version>
+      <Version>200.2.0</Version>
     </PackageReference>
     <PackageReference Include="Esri.ArcGISRuntime.WPF">
-      <Version>100.13.0</Version>
+      <Version>200.2.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
