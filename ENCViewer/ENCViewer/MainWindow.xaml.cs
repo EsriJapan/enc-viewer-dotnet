@@ -1,19 +1,21 @@
 ﻿using Esri.ArcGISRuntime;
 using Esri.ArcGISRuntime.Data;
+using Esri.ArcGISRuntime.Hydrography;
 using Esri.ArcGISRuntime.Mapping;
 using Esri.ArcGISRuntime.UI;
-using Esri.ArcGISRuntime.Hydrography;
+using Esri.ArcGISRuntime.UI.Controls;
+using Esri.ArcGISRuntime.UI.Editing;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
-using System.IO;
 using System.Windows.Media;
-using System.Threading.Tasks;
-using System.Configuration;
+using System.Windows.Media.Imaging;
 
 namespace ENCViewer
 {
@@ -319,12 +321,12 @@ namespace ENCViewer
                 }
                 else if (radioButton.Tag.ToString() == "OSMStandard")
                 {
-                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.OSMStandard);
+                    _mainMapView.Map.Basemap = new Basemap(BasemapStyle.OpenStreets);
 
                 }
                 else if (radioButton.Tag.ToString() == "GSI")
                 {
-                    var webTiledLayer = new WebTiledLayer() { TemplateUri = "https://cyberjapandata.gsi.go.jp/xyz/std/{level}/{col}/{row}.png" };
+                    var webTiledLayer = new WebTiledLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{level}/{col}/{row}.png");
                     _mainMapView.Map.Basemap.BaseLayers.Insert(0, webTiledLayer);
                 }
 
@@ -369,17 +371,18 @@ namespace ENCViewer
         #endregion
 
         #region 作図の開始・停止
-        private async void _startSketchButton_Click(object sender, RoutedEventArgs e)
+        private void _startSketchButton_Click(object sender, RoutedEventArgs e)
         {
 
             // フリーハンドでの作図（スケッチ モード）を開始する
             if (_startSketchButton.Content.ToString() == "作図開始") {
                 _startSketchButton.Content = "作図停止";
 
-                SketchCreationMode creationMode = SketchCreationMode.FreehandLine;
                 try
                 {
-                    await _mainMapView.SketchEditor.StartAsync(creationMode, true);
+                    _mainMapView.GeometryEditor.Tool = new FreehandTool();
+                    _mainMapView.GeometryEditor.Start(Esri.ArcGISRuntime.Geometry.GeometryType.Polygon);
+                    
                 }
                 catch (TaskCanceledException)
                 {
@@ -398,9 +401,9 @@ namespace ENCViewer
             {
                 // スケッチ モードを停止する
                 _startSketchButton.Content = "作図開始";
-                if (_mainMapView.SketchEditor.CancelCommand.CanExecute(null))
-                {
-                    _mainMapView.SketchEditor.CancelCommand.Execute(null);   
+                if (_mainMapView.GeometryEditor.IsStarted)
+                    {
+                        _mainMapView.GeometryEditor.Stop();
                 }
             }
 

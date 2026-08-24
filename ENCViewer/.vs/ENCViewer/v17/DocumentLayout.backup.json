@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\data\\github\\enc-viewer-dotnet\\ENCViewer\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{841EA253-A45F-43EB-A16A-F967FCA08F1C}|ENCViewer\\ENCViewer.csproj|c:\\data\\github\\enc-viewer-dotnet\\encviewer\\encviewer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{841EA253-A45F-43EB-A16A-F967FCA08F1C}|ENCViewer\\ENCViewer.csproj|solutionrelative:encviewer\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\data\\github\\enc-viewer-dotnet\\ENCViewer\\ENCViewer\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "ENCViewer\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\data\\github\\enc-viewer-dotnet\\ENCViewer\\ENCViewer\\MainWindow.xaml.cs",
+              "RelativeToolTip": "ENCViewer\\MainWindow.xaml.cs",
+              "ViewState": "AgIAAIEBAAAAAAAAAAAAAA4AAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-24T13:51:35.388Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
